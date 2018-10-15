@@ -1,6 +1,6 @@
 const http =require("http");
 const reqUrl =require("url");
-const userSql =require("./userSql.js");
+const userSql =require("./public/javascript/userSql.js");
 //引入文件读写模块fs
 var fs = require('fs');
 
