@@ -9,18 +9,32 @@
 </head>
 
 <body>
-    <input type="text" placeholder="userName" id="userName"/>  
-    <select type="text" id="sex"> 
-        <option value="1">男</option> 
-        <option value="0">女</option> 
+    <input type="text" placeholder="userName" id="userName" />
+    <select type="text" id="sex">
+        <option value="1">男</option>
+        <option value="0">女</option>
     </select>
-    <input type="text" placeholder="age" id="age"/>  
-    <input type="text" placeholder="phoneNumber" id="phoneNumber"/>  
- 
+    <input type="text" placeholder="age" id="age" />
+    <input type="text" placeholder="phoneNumber" id="phoneNumber" />
+
     <button id="submitBtn">提交</button>
 
-    <button id="clickMe">点我获取全部</button>
-    <div id="userList"></div>
+    <button id="getUserListBtn">点我获取全部</button>
+
+
+    <table>
+        <thead>
+            <th>名称</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>手机号</th>
+        </thead>
+        <tbody id=zp_tbody></tbody>
+    </table>
+    <div id="userList">
+            <input type="text" placeholder="userName" id="searchWord" />
+            <button id=searchBtn>搜索</button>
+    </div>
     <!--<img src="/static/img/success.png" alt="" width="40px" height="40px">-->
 </body>
 <script type="text/javascript" src="/static/javascript/libs/jquery-1.7.2.min.js"></script>
