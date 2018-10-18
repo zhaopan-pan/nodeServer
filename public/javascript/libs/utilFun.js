@@ -1,4 +1,6 @@
 
+const moment=require("moment");
+
 
 const utilFun={
 
@@ -40,8 +42,14 @@ const utilFun={
 		let dataList={};
 		let datas={};
 		if(data){
+			// if(data.createTime){
+				// data.createTime=data.createTime
+			// }
+			const result=JSON.parse(JSON.stringify(data));
+			// console.log(moment);
+			// console.log(moment(result[0].createTime).format("YYYY-MM-DD"));
 			successDate.datas=dataList;
-			successDate.datas.dataList=JSON.parse(JSON.stringify(data));
+			successDate.datas.dataList=result;
 		}
 		return successDate;
 	},
