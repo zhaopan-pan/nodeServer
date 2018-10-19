@@ -1,4 +1,6 @@
 
+const moment=require("moment");
+
 
 const utilFun={
 
@@ -27,15 +29,28 @@ const utilFun={
 	
 	},
 
-	//返回数据格式
+	/**
+	 * 返回数据格式
+	 * @param {状态码} status 
+	 * @param {数据} data 
+	 */
 	dataStyle:function(status,data){
         const successDate={
 			code:status.code,
 			msg:status.msg,
-            data:{
-                dataList:data?JSON.stringify(data):""
-            }
-        };
+		};
+		let dataList={};
+		let datas={};
+		if(data){
+			// if(data.createTime){
+				// data.createTime=data.createTime
+			// }
+			const result=JSON.parse(JSON.stringify(data));
+			// console.log(moment);
+			// console.log(moment(result[0].createTime).format("YYYY-MM-DD"));
+			successDate.datas=dataList;
+			successDate.datas.dataList=result;
+		}
 		return successDate;
 	},
 
