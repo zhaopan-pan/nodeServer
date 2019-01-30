@@ -2,8 +2,7 @@ const http = require("http");
 const reqUrl = require("url");
 const path = require("path");
 var bodyParser = require('body-parser');
-//引入文件读写模块fs
-var fs = require('fs');
+
 const express = require('express');
 const userSql = require("./src/service/userSql.js");
 
