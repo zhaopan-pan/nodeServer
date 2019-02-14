@@ -10,5 +10,5 @@ var Student = /** @class */ (function () {
 function greeter(person) {
     return "Hello, " + person.firstName + " " + person.lastName;
 }
-var user = new Student("Jane", "M.", "User");
-console.log(user);
+var users = new Student("Jane", "M.", "User");
+console.log(users);

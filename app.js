@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/
 
 
 
-app.use('/static', express.static('public'));
+app.use('/static/', express.static('public'));
 
 
 //注册请求中间件

@@ -9,7 +9,8 @@ router.get('', function(req, res, next) {
 
     // 从某字符设备创建一个流。
     var  readFile = fs.createReadStream('./router/web/test.js');
-    var  writeFile = fs.createWriteStream('./router/web/write.js');//创建可写入流
+    //创建可写入流
+    var  writeFile = fs.createWriteStream('./router/web/write.js');
     // writeFile.write(readFile);
     // writeFile.end("222");
     writeFile.on('pipe', (src) => {
@@ -26,4 +27,15 @@ router.get('', function(req, res, next) {
     );
 });
 
+
+router.get('/tsl1', function(req, res, next) {
+
+
+    res.render('tsL1',
+        {
+            title:	'ts',
+
+        }
+    );
+});
 module.exports = router;
