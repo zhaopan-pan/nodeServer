@@ -1,4 +1,3 @@
-
 //点击搜索
 $("#searchBtn").on("click", function () {
     const searchWord = $("#searchWord").val();
