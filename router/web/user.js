@@ -31,9 +31,9 @@ router.get('', function(req, res, next) {
 router.get('/tsl1', function(req, res, next) {
 
 
-    res.render('tsL1',
+    res.render('ts/tsL1',
         {
-            title:	'ts',
+            title:'ts',
 
         }
     );
