@@ -8,7 +8,7 @@ function greeter(person: Person1) {
 }
 
 let user = { firstName: "Jane", lastName: "User" };
-var a=1; 
+var a = 1;
 document.body.innerHTML = greeter(user);
 
 /**
@@ -26,7 +26,6 @@ function extend<T, U>(first: T, second?: U): T & U {
             (<any>result)[id] = (<any>second)[id];
         }
     }
-    console.log(result);
     return result;
 }
 
@@ -34,7 +33,7 @@ class Person {
     constructor(public name: string) { }
 }
 interface Loggable {
-    log(msg:string): void;
+    log(msg: string): void;
 }
 class ConsoleLogger implements Loggable {
     log() {
@@ -43,7 +42,7 @@ class ConsoleLogger implements Loggable {
 }
 var jim = extend(new Person("Jim"), new ConsoleLogger());
 var n = jim.name;
-console.log(new Person("Jim"));
+// console.log(new Person("Jim"));
 // jim.log();
 
 
@@ -62,9 +61,9 @@ let list2: Array<number> = [1, 2, 3];
 // Declare a tuple type
 let tupleArr: [string, number];
 // Initialize it
-tupleArr= ['hello', 10]; // OK
+tupleArr = ['hello', 10]; // OK
 // tupleArr = [10, 'hello']; // Error 调换位置
-console.log(tupleArr[0].substr(1)); 
+// console.log(tupleArr[0].substr(1));
 // console.log(tupleArr[1].substr(1)); //number类型不存在substr方法
 //当访问一个越界的元素，会使用联合类型替代：
 // tupleArr[2] = 'world'; // OK, 字符串可以赋值给(string | number)类型
@@ -73,7 +72,7 @@ console.log(tupleArr[0].substr(1));
 /**
  * 枚举
  */
-enum Color {Red, Green, Blue};//默认情况下，从0开始为元素编号。
+enum Color { Red, Green, Blue };//默认情况下，从0开始为元素编号。
 let enum1: Color = Color.Green;//1
 let enum2: string = Color[2];//可以由枚举的值得到它的名字 Blue
 
@@ -109,6 +108,7 @@ let obj = {
 /**
  * 接口
  */
+//f1:额外的属性检查
 interface SquareConfig {
     color?: string;
     width?: number;
@@ -116,9 +116,107 @@ interface SquareConfig {
 }
 
 function createSquare(config: SquareConfig): { color: string; area: number } {
-    console.log(typeof config.width);
-    const area=config.width;
-    return {color:config.color||"green",area:<number>area}
+    const area = config.width;
+    return { color: config.color || "green", area: <number>area }
 }
 let mySquare = createSquare({ colour: "red", width: 100 });
-console.log(mySquare);
+
+//f2:只读属性
+interface Point {
+    readonly x: number;
+    readonly y: number;
+}
+let p1: Point = { x: 10, y: 20 };
+// p1.x = 5; // error!
+
+//f3:TypeScript具有ReadonlyArray<T>类型，确保数组创建后再也不能被修改
+let readonlyArr: number[] = [1, 2, 3, 4];
+let ro: ReadonlyArray<number> = readonlyArr;//ro变成只读数组
+// ro[0] = 12;  ro.push(5); ro.length = 100; a = ro; // error!
+let barr = ro as number[];//可以用类型断言重写
+
+//f4:函数类型
+interface SearchFunc {
+    (source: string, subString: string): boolean;
+};
+let mySearch: SearchFunc;
+mySearch = function (src: string, sub: string) {
+    let result = src.search(new RegExp("\\" + sub, "i"));//先用构造函数创建正则对象，并忽略大小写
+    return result > -1;
+};
+
+//f5:可索引的类型
+interface StringArray {
+    [index: number]: string;//用 number去索引StringArray时会得到string类型的返回值
+}
+
+let myArray: StringArray;
+myArray = ["Bob", "Fred"];
+
+let myStr: string = myArray[0];
+
+interface NumberDictionary {
+    [index: string]: number;
+    length: number;    // 可以，length是number类型
+    // name: string       // 错误，`name`的类型与索引类型返回值的类型不匹配
+}
+
+/**
+ * 类类型
+ * 实现接口
+ */
+
+//f1:类静态部分与实例部分的区别
+
+
+interface ClockConstructor { //ClockConstructor为构造函数所用
+    new(hour: number, minute: number): ClockInterface;
+}
+
+interface ClockInterface {//ClockInterface为实例方法所用。 
+    tick(): void;
+}
+//ctor的类型是接口 ClockConstructor，在这里就为类的静态部分指定需要实现的接口
+let createClock = (ctor: ClockConstructor, hour: number, minute: number): ClockInterface => {
+    return new ctor(hour, minute);
+}
+class DigitalClock implements ClockInterface {
+    hour: number;
+    minute: number;
+    constructor(h: number, m: number) {
+        this.hour = h;
+        this.minute = m;
+    }
+    tick() {
+        console.log("beep beep", this.hour, this.minute);
+    }
+}
+class AnalogClock implements ClockInterface {
+    hour: number;
+    minute: number;
+    constructor(h: number, m: number) {
+        this.hour = h;
+        this.minute = m;
+    }
+    tick() {
+        console.log("tick tock", this.hour, this.minute);
+    }
+}
+
+
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);
+digital.tick();
+analog.tick();
+
+//f2:类静态部分与实例部分的区别 
+//类是具有两个类型的：静态部分的类型和实例的类型
+// interface ClockConstructors {
+//     new (hour: number, minute: number);
+// }
+// class Clock implements ClockConstructors {当一个类实现了一个接口时，只对其实例部分进行类型检查。 constructor存在于类的静态部分，所以不在检查的范围内
+//     currentTime: Date;
+//     constructor(h: number, m: number) { }
+// }
+
+//f3:继承接口

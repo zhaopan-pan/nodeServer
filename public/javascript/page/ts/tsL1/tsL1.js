@@ -20,7 +20,6 @@ function extend(first, second) {
             result[id] = second[id];
         }
     }
-    console.log(result);
     return result;
 }
 class Person {
@@ -35,7 +34,7 @@ class ConsoleLogger {
 }
 var jim = extend(new Person("Jim"), new ConsoleLogger());
 var n = jim.name;
-console.log(new Person("Jim"));
+// console.log(new Person("Jim"));
 // jim.log();
 /**
  * 数组
@@ -53,7 +52,7 @@ let tupleArr;
 // Initialize it
 tupleArr = ['hello', 10]; // OK
 // tupleArr = [10, 'hello']; // Error 调换位置
-console.log(tupleArr[0].substr(1));
+// console.log(tupleArr[0].substr(1));
 // console.log(tupleArr[1].substr(1)); //number类型不存在substr方法
 //当访问一个越界的元素，会使用联合类型替代：
 // tupleArr[2] = 'world'; // OK, 字符串可以赋值给(string | number)类型
@@ -92,9 +91,59 @@ let obj = {
     [sym]: "value"
 };
 function createSquare(config) {
-    console.log(typeof config.width);
     const area = config.width;
     return { color: config.color || "green", area: area };
 }
 let mySquare = createSquare({ colour: "red", width: 100 });
-console.log(mySquare);
+let p1 = { x: 10, y: 20 };
+// p1.x = 5; // error!
+//f3:TypeScript具有ReadonlyArray<T>类型，确保数组创建后再也不能被修改
+let readonlyArr = [1, 2, 3, 4];
+let ro = readonlyArr; //ro变成只读数组
+// ro[0] = 12;  ro.push(5); ro.length = 100; a = ro; // error!
+let barr = ro; //可以用类型断言重写
+;
+let mySearch;
+mySearch = function (src, sub) {
+    let result = src.search(new RegExp("\\" + sub, "i")); //先用构造函数创建正则对象，并忽略大小写
+    return result > -1;
+};
+let myArray;
+myArray = ["Bob", "Fred"];
+let myStr = myArray[0];
+//ctor的类型是接口 ClockConstructor，在这里就为类的静态部分指定需要实现的接口
+let createClock = (ctor, hour, minute) => {
+    return new ctor(hour, minute);
+};
+class DigitalClock {
+    constructor(h, m) {
+        this.hour = h;
+        this.minute = m;
+    }
+    tick() {
+        console.log("beep beep", this.hour, this.minute);
+    }
+}
+class AnalogClock {
+    constructor(h, m) {
+        this.hour = h;
+        this.minute = m;
+    }
+    tick() {
+        console.log("tick tock", this.hour, this.minute);
+    }
+}
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);
+digital.tick();
+analog.tick();
+//f2:类静态部分与实例部分的区别 
+//类是具有两个类型的：静态部分的类型和实例的类型
+// interface ClockConstructors {
+//     new (hour: number, minute: number);
+// }
+// class Clock implements ClockConstructors {当一个类实现了一个接口时，只对其实例部分进行类型检查。 constructor存在于类的静态部分，所以不在检查的范围内
+//     currentTime: Date;
+//     constructor(h: number, m: number) { }
+// }
+//f3:继承接口
