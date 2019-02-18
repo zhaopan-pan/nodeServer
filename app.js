@@ -4,7 +4,7 @@ const path = require("path");
 var bodyParser = require('body-parser');
 
 const express = require('express');
-
+//全局安装后还是找不到express --version，就安装express-generator
 
 const app = express()
 
