@@ -147,14 +147,14 @@ mySearch = function (src: string, sub: string) {
 
 //f5:可索引的类型
 interface StringArray {
-    [index: number]: string;//用 number去索引StringArray时会得到string类型的返回值
+    [index: number]: string|number;//用 number去索引StringArray时会得到string类型的返回值
 }
 
 let myArray: StringArray;
-myArray = ["Bob", "Fred"];
+myArray = ["Bob", "Fred",1];
 
-let myStr: string = myArray[0];
-
+let myStr: string|number = myArray[0];
+console.log(myStr);
 interface NumberDictionary {
     [index: string]: number;
     length: number;    // 可以，length是number类型

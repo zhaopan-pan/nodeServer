@@ -38,4 +38,24 @@ router.get('/tsl1', function(req, res, next) {
         }
     );
 });
+router.get('/reptileIndex', function(req, res, next) {
+
+
+    request('http://www.jd.com', function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      $ = cheerio.load(body);
+      res.json({
+          cat: $('.cate_menu_item').length
+      });
+    }
+  })
+
+
+    res.render('reptile/reptileIndex',
+        {
+            title:'reptile',
+
+        }
+    );
+});
 module.exports = router;

@@ -109,8 +109,9 @@ mySearch = function (src, sub) {
     return result > -1;
 };
 let myArray;
-myArray = ["Bob", "Fred"];
+myArray = ["Bob", "Fred", 1];
 let myStr = myArray[0];
+console.log(myStr);
 //ctor的类型是接口 ClockConstructor，在这里就为类的静态部分指定需要实现的接口
 let createClock = (ctor, hour, minute) => {
     return new ctor(hour, minute);

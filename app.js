@@ -2,7 +2,7 @@ const http = require("http");
 const reqUrl = require("url");
 const path = require("path");
 var bodyParser = require('body-parser');
-
+var debug = require('debug')('node-server:server');
 const express = require('express');
 //全局安装后还是找不到express --version，就安装express-generator
 
@@ -37,8 +37,47 @@ app.use("/user/ajaxUser", ajaxUser);
 app.use("", user)
 
 // 创建一个 HTTP 服务器
-const srv = http.createServer(app).listen(port, hostname);
-console.log("server run in "+port);
+const server = http.createServer(app).listen(port, hostname);
+server.on('error', onError);
+server.on('listening', onListening);
+/**
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
+
 // 123456
 // sdfgsdg
 
