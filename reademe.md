@@ -29,3 +29,5 @@ CREATE TABLE `user` (
   `updateTime` date DEFAULT NULL,
   UNIQUE KEY `phoneNumber` (`phoneNumber`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+test11
