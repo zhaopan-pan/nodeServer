@@ -2,9 +2,9 @@ const http = require("http");
 const reqUrl = require("url");
 const path = require("path");
 var bodyParser = require('body-parser');
-var debug = require('debug')('node-server:server');
+
 const express = require('express');
-//全局安装后还是找不到express --version，就安装express-generator
+
 
 const app = express()
 
@@ -13,11 +13,22 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 //默认为views应用程序根目录中的目录
-app.set('views', path.join(__dirname, 'view'));
+// app.set('views', path.join(__dirname, 'view'));
+//设置要使用ejs模板引擎
+// app.set('view engine', 'ejs');
 
-//设置要使用Pug模板引擎
-app.set('view engine', 'ejs');
 
+
+
+app.set('view engine', 'html');
+app.engine('html', require('ejs-mate'));
+app.locals._layoutFile = 'index.html';
+//上面指定ejs引擎渲染html 文件,接着指定使用 ejs-mate 做母版页引擎,最后指定 母版页是 layout.html
+// 这里有个 app.locals 这个变量,提一句,可以把 locals 理解成客户端的一个全局变量,我们现在给变量的_alyoutFile 属性赋值 'layout.html'
+// 这样在后端指定母版页的好处是,你不需要在view中的html页面里特定指定谁是你的母版页.
+// 如果上面最后一句你不写,需要在前端每个页面指定渲染的母版页,假设 index.ejs 套用母版页前代码如下:
+// <% layout('layout.html') -%>
+// <span>Hello World!</span>
 
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -29,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/
 
 app.use('/static/', express.static('public'));
 
-
 //注册请求中间件
 const ajaxUser = require("./router/ajax/ajaxUser");
 const user = require("./router/web/user");
@@ -37,47 +47,8 @@ app.use("/user/ajaxUser", ajaxUser);
 app.use("", user)
 
 // 创建一个 HTTP 服务器
-const server = http.createServer(app).listen(port, hostname);
-server.on('error', onError);
-server.on('listening', onListening);
-/**
- * Event listener for HTTP server "error" event.
- */
-function onError(error) {
-    if (error.syscall !== 'listen') {
-        throw error;
-    }
-
-    var bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            throw error;
-    }
-}
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-    debug('Listening on ' + bind);
-  }
-
+const srv = http.createServer(app).listen(port, hostname);
+console.log("server run in " + port);
 // 123456
 // sdfgsdg
 
@@ -90,5 +61,3 @@ function onListening() {
 // console.log(path.join(__dirname, 'view'));
 // //将路径或路径片段的序列解析为绝对路径。
 // console.log(path.resolve(__dirname, './view'));
-// 的地方的地方地
-// git 方个人供热12
