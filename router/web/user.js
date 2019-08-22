@@ -19,7 +19,7 @@ router.get('', function (req, res, next) {
     })
     readFile.pipe(writeFile);
     // console.log(readFile);
-    res.render('index',
+    res.render('test',
         {
             title: '首页',
 
@@ -28,16 +28,16 @@ router.get('', function (req, res, next) {
 });
 
 
-router.get('/tsl1', function (req, res, next) {
+// router.get('/tsl1', function (req, res, next) {
 
 
-    res.render('ts/tsL1',
-        {
-            title: 'ts',
+//     res.render('ts/tsL1',
+//         {
+//             title: 'ts',
 
-        }
-    );
-});
+//         }
+//     );
+// });
 router.get('/test', function (req, res, next) {
 
 

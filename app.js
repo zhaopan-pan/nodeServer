@@ -13,14 +13,14 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 //默认为views应用程序根目录中的目录
-// app.set('views', path.join(__dirname, 'view'));
+app.set('views', path.join(__dirname, 'view'));
 //设置要使用ejs模板引擎
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
 
 
 
-app.set('view engine', 'html');
+// app.set('view engine', 'html');
 app.engine('html', require('ejs-mate'));
 app.locals._layoutFile = 'index.html';
 //上面指定ejs引擎渲染html 文件,接着指定使用 ejs-mate 做母版页引擎,最后指定 母版页是 layout.html
