@@ -16,14 +16,10 @@ const port = 3000;
 app.set('views', path.join(__dirname, 'view'));
 //设置要使用ejs模板引擎
 app.set('view engine', 'ejs');
-
-
-
-
-// app.set('view engine', 'html');
-app.engine('html', require('ejs-mate'));
-app.locals._layoutFile = 'index.html';
-//上面指定ejs引擎渲染html 文件,接着指定使用 ejs-mate 做母版页引擎,最后指定 母版页是 layout.html
+//指定ejs引擎渲染html 文件,接着指定使用 ejs-mate 做母版页引擎,
+app.engine('ejs', require('ejs-mate'));
+//指定母版页是index
+app.locals._layoutFile = 'index';
 // 这里有个 app.locals 这个变量,提一句,可以把 locals 理解成客户端的一个全局变量,我们现在给变量的_alyoutFile 属性赋值 'layout.html'
 // 这样在后端指定母版页的好处是,你不需要在view中的html页面里特定指定谁是你的母版页.
 // 如果上面最后一句你不写,需要在前端每个页面指定渲染的母版页,假设 index.ejs 套用母版页前代码如下:
